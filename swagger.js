@@ -7,7 +7,7 @@ const doc = {
     version: "1.0.0",
   },
 
-  host: "cse341-nn11.onrender.com", // Change this to your host if different
+  host: "cse341l05-l08.onrender.com/", // Change this to your host if different
   schemes: ["https"],
 
   //   // local dev
