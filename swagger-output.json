@@ -5,8 +5,8 @@
     "description": "API documentation for the Task Manager project",
     "version": "1.0.0"
   },
-  "host": "cse341l05-l08.onrender.com/",
-  "basePath": "/api",
+  "host": "cse341l05-l08.onrender.com",
+  "basePath": "/",
   "schemes": ["https"],
   "paths": {
     "/tasks": {

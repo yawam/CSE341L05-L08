@@ -7,13 +7,13 @@ const doc = {
     version: "1.0.0",
   },
 
-  host: "cse341l05-l08.onrender.com/", // Change this to your host if different
-  schemes: ["https"],
+  //   host: "cse341l05-l08.onrender.com/", // Change this to your host if different
+  //   schemes: ["https"],
 
   // local dev
-  // host: "localhost:3000",
-  schemes: ["http"],
+  host: "localhost:3000",
   basePath: "/tasks", // Correct base path
+  schemes: ["http"],
   components: {
     schemas: {
       Task: {
