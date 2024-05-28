@@ -10,8 +10,8 @@ const doc = {
   host: "cse341l05-l08.onrender.com/", // Change this to your host if different
   schemes: ["https"],
 
-  //   // local dev
-  //   host: "localhost:3000",
+  // local dev
+  // host: "localhost:3000",
   basePath: "/tasks", // Correct base path
   schemes: ["http"],
   components: {
@@ -52,7 +52,7 @@ const doc = {
   },
 };
 
-const outputFile = "./swagger_output.json";
+const outputFile = "./swagger-output.json";
 const endpointsFiles = ["./routes/tasks.js"];
 
 swaggerAutogen(outputFile, endpointsFiles, doc);

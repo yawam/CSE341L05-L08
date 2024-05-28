@@ -6,17 +6,26 @@
     "version": "1.0.0"
   },
   "host": "localhost:3000",
-  "basePath": "/tasks",
-  "schemes": [
-    "http"
-  ],
+  "basePath": "/api",
+  "schemes": ["http"],
   "paths": {
-    "/": {
+    "/tasks": {
       "get": {
-        "description": "",
+        "summary": "Retrieve all tasks",
+        "description": "Retrieve a list of all tasks.",
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "A list of tasks",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Task"
+                  }
+                }
+              }
+            }
           },
           "500": {
             "description": "Internal Server Error"
@@ -24,10 +33,29 @@
         }
       },
       "post": {
-        "description": "",
+        "summary": "Create a new task",
+        "description": "Create a new task.",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Task object that needs to be added",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Task"
+            }
+          }
+        ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "201": {
+            "description": "Task created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/Task"
+                }
+              }
+            }
           },
           "500": {
             "description": "Internal Server Error"
@@ -35,23 +63,32 @@
         }
       }
     },
-    "/{id}": {
+    "/tasks/{id}": {
       "get": {
-        "description": "",
+        "summary": "Retrieve a task by ID",
+        "description": "Retrieve a single task by its ID.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
+            "description": "ID of the task to retrieve",
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "A single task",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/Task"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Not Found"
+            "description": "Task not found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -59,21 +96,39 @@
         }
       },
       "put": {
-        "description": "",
+        "summary": "Update a task by ID",
+        "description": "Update an existing task by its ID.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
+            "description": "ID of the task to update",
             "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Task object that needs to be updated",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Task"
+            }
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Task updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/definitions/Task"
+                }
+              }
+            }
           },
           "404": {
-            "description": "Not Found"
+            "description": "Task not found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -81,25 +136,57 @@
         }
       },
       "delete": {
-        "description": "",
+        "summary": "Delete a task by ID",
+        "description": "Delete a task by its ID.",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
+            "description": "ID of the task to delete",
             "type": "string"
           }
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "Task deleted"
           },
           "404": {
-            "description": "Not Found"
+            "description": "Task not found"
           },
           "500": {
             "description": "Internal Server Error"
           }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Task": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "example": "Sample Task"
+        },
+        "description": {
+          "type": "string",
+          "example": "This is a sample task description."
+        },
+        "status": {
+          "type": "string",
+          "enum": ["pending", "in-progress", "completed"],
+          "example": "pending"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2021-07-20T17:32:28Z"
+        },
+        "finishedAt": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2021-07-21T17:32:28Z"
         }
       }
     }
