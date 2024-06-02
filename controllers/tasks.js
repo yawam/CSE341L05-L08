@@ -46,6 +46,7 @@ const updateTask = async (req, res) => {
       res.status(404).send("Task not found");
     } else {
       res.send(task);
+      res.status(204).send("Task updated");
     }
   } catch (error) {
     res.status(500).send(error);
@@ -60,6 +61,7 @@ const deleteTask = async (req, res) => {
       res.status(404).send("Task not found");
     } else {
       res.send(task);
+      res.status(200).send("Task deleted");
     }
   } catch (error) {
     res.status(500).send(error);

@@ -1,6 +1,29 @@
 const express = require("express");
+const { body, param } = require("express-validator");
 const router = express.Router();
 const tasksController = require("../controllers/tasks");
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Task:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *           example: "60b6c0f5f9d2b14c2e4e4b6b"
+ *         title:
+ *           type: string
+ *           example: "My Task"
+ *         description:
+ *           type: string
+ *           example: "This is a task description"
+ *         status:
+ *           type: string
+ *           enum: [pending, in-progress, completed]
+ *           example: "pending"
+ */
 
 /**
  * @swagger
@@ -43,7 +66,11 @@ router.get("/", tasksController.getAllTasks);
  *       404:
  *         description: Task not found
  */
-router.get("/:id", tasksController.getTaskById);
+router.get(
+  "/:id",
+  [param("id").isMongoId().withMessage("Invalid task ID")],
+  tasksController.getTaskById
+);
 
 /**
  * @swagger
@@ -72,8 +99,31 @@ router.get("/:id", tasksController.getTaskById);
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Task'
+ *       400:
+ *         description: Invalid input
  */
-router.post("/", tasksController.createTask);
+router.post(
+  "/",
+  [
+    body("title")
+      .notEmpty()
+      .withMessage("Title is required")
+      .isString()
+      .withMessage("Title must be a string"),
+    body("description")
+      .optional()
+      .isString()
+      .withMessage("Description must be a string"),
+    body("status")
+      .notEmpty()
+      .withMessage("Status is required")
+      .isIn(["pending", "in-progress", "completed"])
+      .withMessage(
+        'Status must be one of "pending", "in-progress", or "completed"'
+      ),
+  ],
+  tasksController.createTask
+);
 
 /**
  * @swagger
@@ -109,10 +159,29 @@ router.post("/", tasksController.createTask);
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Task'
+ *       400:
+ *         description: Invalid input
  *       404:
  *         description: Task not found
  */
-router.put("/:id", tasksController.updateTask);
+router.put(
+  "/:id",
+  [
+    param("id").isMongoId().withMessage("Invalid task ID"),
+    body("title").optional().isString().withMessage("Title must be a string"),
+    body("description")
+      .optional()
+      .isString()
+      .withMessage("Description must be a string"),
+    body("status")
+      .optional()
+      .isIn(["pending", "in-progress", "completed"])
+      .withMessage(
+        'Status must be one of "pending", "in-progress", or "completed"'
+      ),
+  ],
+  tasksController.updateTask
+);
 
 /**
  * @swagger
@@ -133,6 +202,10 @@ router.put("/:id", tasksController.updateTask);
  *       404:
  *         description: Task not found
  */
-router.delete("/:id", tasksController.deleteTask);
+router.delete(
+  "/:id",
+  [param("id").isMongoId().withMessage("Invalid task ID")],
+  tasksController.deleteTask
+);
 
 module.exports = router;

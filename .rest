@@ -11,19 +11,20 @@ POST http://localhost:3000/tasks/
 Content-Type: application/json
 
 {
-    "title": "Register for classes",
-  "description": "Registering for classes for next semester",
-  "status": "in-progress",
+    "title": "",
+  "description": "Go play some music",
+  "status": "pending",
   "createdAt": ""
 }
 
 ### Update task by ID
-PUT http://localhost:3000/tasks/66524d4e47cca60f12ba1b83
+PUT http://localhost:3000/tasks/66523018eedc7c6335ac8547
 Content-Type: application/json
 
 {
-    "title": "Registering for a specific class"
+    "title": "trying to run",
+    "description": "Try to build a new page"
 }
 
 ### delete task by ID
-DELETE http://localhost:3000/tasks/66524d4e47cca60f12ba1b83
+DELETE http://localhost:3000/tasks/66523018eedc7c6335ac8547
