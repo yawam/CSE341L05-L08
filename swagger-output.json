@@ -5,9 +5,27 @@
     "description": "API documentation for the Task Manager project",
     "version": "1.0.0"
   },
-  "host": "cse341l05-l08.onrender.com",
+  "host": "localhost:3000",
   "basePath": "/",
-  "schemes": ["https"],
+  "schemes": ["http", "https"],
+  "securityDefinitions": {
+    "oauth2": {
+      "type": "oauth2",
+      "flow": "accessCode",
+      "authorizationUrl": "https://accounts.google.com/o/oauth2/auth",
+      "tokenUrl": "https://oauth2.googleapis.com/token",
+      "scopes": {
+        "read_tasks": "Read tasks",
+        "write_tasks": "Create and update tasks",
+        "delete_tasks": "Delete tasks"
+      }
+    }
+  },
+  "security": [
+    {
+      "oauth2": ["read_tasks", "write_tasks", "delete_tasks"]
+    }
+  ],
   "paths": {
     "/tasks": {
       "get": {
@@ -30,7 +48,12 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "oauth2": ["read_tasks"]
+          }
+        ]
       },
       "post": {
         "summary": "Create a new task",
@@ -60,7 +83,12 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "oauth2": ["write_tasks"]
+          }
+        ]
       }
     },
     "/tasks/{id}": {
@@ -93,7 +121,12 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "oauth2": ["read_tasks"]
+          }
+        ]
       },
       "put": {
         "summary": "Update a task by ID",
@@ -133,7 +166,12 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "oauth2": ["write_tasks"]
+          }
+        ]
       },
       "delete": {
         "summary": "Delete a task by ID",
@@ -157,7 +195,12 @@
           "500": {
             "description": "Internal Server Error"
           }
-        }
+        },
+        "security": [
+          {
+            "oauth2": ["delete_tasks"]
+          }
+        ]
       }
     }
   },

@@ -12,8 +12,8 @@ const doc = {
 
   // local dev
   // host: "localhost:3000",
-  basePath: "/tasks", // Correct base path
   // schemes: ["http"],
+  basePath: "/tasks", // Correct base path
   components: {
     schemas: {
       Task: {
